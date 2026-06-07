@@ -1,3 +1,219 @@
-# SubSpace Outreach Pipeline
+# SubSpace Outreach Automation Platform
 
-Project structure initialized.
+## Overview
+
+SubSpace Outreach Automation Platform is an end-to-end cold outreach system that automates prospect discovery, decision-maker identification, email enrichment, AI-powered outreach generation, and email delivery.
+
+The system accepts a single company domain as input and automatically executes the complete outreach workflow with minimal human intervention.
+
+This project was developed as part of the Software Engineering Take-Home Assignment for SubSpace / Vocallabs.
+
+---
+
+## Problem Statement
+
+Sales teams spend significant time manually:
+
+* Researching similar companies
+* Finding relevant decision makers
+* Collecting verified work email addresses
+* Writing personalized outreach messages
+* Sending outreach campaigns
+
+This platform automates the entire process through API integrations and AI-generated communication.
+
+---
+
+## Workflow
+
+Input:
+
+Company Domain
+
+Example:
+
+stripe.com
+
+Pipeline:
+
+1. Company Discovery
+
+   * Uses Ocean.io API
+   * Finds companies similar to the provided domain
+
+2. Decision Maker Discovery
+
+   * Uses Prospeo API
+   * Identifies engineering and leadership contacts
+
+3. Email Enrichment
+
+   * Uses Prospeo enrichment endpoints
+   * Retrieves verified professional email addresses
+
+4. Outreach Generation
+
+   * Uses Google Gemini
+   * Generates personalized outreach emails
+
+5. Email Review Checkpoint
+
+   * Displays all generated outreach messages
+   * Requires confirmation before sending
+
+6. Email Delivery
+
+   * Uses Brevo Transactional Email API
+   * Delivers outreach emails
+
+---
+
+## Features
+
+* End-to-end automated outreach pipeline
+* Similar company discovery
+* Decision-maker identification
+* Verified email enrichment
+* AI-generated personalized outreach
+* Retry handling for API rate limits
+* Fallback outreach templates
+* Email review checkpoint before delivery
+* Dashboard monitoring interface
+* Live pipeline execution logs
+* Workspace reset functionality
+
+---
+
+## Tech Stack
+
+Backend:
+
+* Node.js
+* Express.js
+
+APIs:
+
+* Ocean.io
+* Prospeo
+* Google Gemini
+* Brevo
+
+Frontend:
+
+* HTML
+* CSS
+* JavaScript
+
+Storage:
+
+* JSON-based local persistence
+
+Version Control:
+
+* Git
+* GitHub
+
+---
+
+## Project Structure
+
+project-root/
+
+├── public/
+│   ├── index.html
+│   └── style.css
+│
+├── src/
+│   ├── config/
+│   ├── pipeline/
+│   ├── services/
+│   ├── utils/
+│   └── index.js
+│
+├── data/
+│   ├── companies.json
+│   ├── contacts.json
+│   ├── emails.json
+│   └── outreach.json
+│
+├── server.js
+├── package.json
+└── README.md
+
+---
+
+## Dashboard Features
+
+* Pipeline execution from browser
+* Live execution logs
+* Companies discovered
+* Contacts identified
+* Verified emails
+* Generated outreach messages
+* Workspace reset
+
+---
+
+## Error Handling
+
+The system is designed to handle:
+
+* API rate limiting
+* Missing contact data
+* Missing email addresses
+* AI generation failures
+* Partial pipeline failures
+
+When AI generation is unavailable, the system automatically falls back to a predefined outreach template to ensure pipeline completion.
+
+---
+
+## Safety Mechanism
+
+Before sending emails, the system displays:
+
+* Recipient information
+* Company information
+* Email subject
+
+A manual confirmation step is required before email delivery begins.
+
+This prevents accidental outreach and provides a final review opportunity.
+
+---
+
+## Example Results
+
+Input:
+
+stripe.com
+
+Output:
+
+* 5 similar companies discovered
+* 4 decision makers identified
+* 4 verified work emails enriched
+* 4 personalized outreach messages generated
+* 4 emails delivered successfully
+
+---
+
+## Future Improvements
+
+* Database integration
+* Deployment support
+* CRM integration
+* Multi-channel outreach
+* Advanced analytics dashboard
+* Email open and reply tracking
+* Bulk campaign scheduling
+
+---
+
+## Author
+
+Kaleem M
+
+Software Engineering Internship Assignment
+
+SubSpace / Vocallabs
