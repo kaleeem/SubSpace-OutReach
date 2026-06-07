@@ -11,7 +11,8 @@
 ## Resulting Email 
 
 <img width="1560" height="447" alt="image" src="https://github.com/user-attachments/assets/6e5ff044-0af8-48c0-b039-1e80002cdc8f" />
-<img width="1569" height="308" alt="image" src="https://github.com/user-attachments/assets/71cf4c23-44ac-4fe5-841a-4ec1da05e18a" />
+<img width="1569" height="308" alt="Screenshot 2026-06-07 220006" src="https://github.com/user-attachments/assets/8bbb0b20-9b3a-45fe-83b4-d4187b9357a6" />
+
 
 ## Overview
 
