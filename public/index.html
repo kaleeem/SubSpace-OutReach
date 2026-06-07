@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubSpace Outreach Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>SubSpace Outreach</h1>
+            <p>AI Powered Prospect Discovery & Outreach Platform</p>
+
+            <div class="run-section">
+
+                <input type="text" id="domainInput" placeholder="Enter company domain (e.g. stripe.com)">
+
+                <button id="runBtn">
+                    Run Pipeline
+                </button>
+
+                <button id="resetBtn">
+                    Reset Workspace
+                </button>
+
+            </div>
+
+            <p id="statusMessage"></p>
+        </div>
+
+        <div class="stats">
+
+            <div class="card">
+                <h3>Companies</h3>
+                <span id="companies">0</span>
+            </div>
+
+            <div class="card">
+                <h3>Contacts</h3>
+                <span id="contacts">0</span>
+            </div>
+
+            <div class="card">
+                <h3>Emails</h3>
+                <span id="emails">0</span>
+            </div>
+
+            <div class="card">
+                <h3>Outreach</h3>
+                <span id="outreach">0</span>
+            </div>
+
+        </div>
+
+        <div class="table-card">
+            <h2>Live Pipeline Logs</h2>
+
+            <div id="logsPanel" class="logs-panel">
+                Waiting for pipeline...
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h2>Companies Found</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Domain</th>
+                        <th>Relevance</th>
+                    </tr>
+                </thead>
+                <tbody id="companiesTable"></tbody>
+            </table>
+        </div>
+
+        <div class="table-card">
+            <h2>Decision Makers</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Company</th>
+                    </tr>
+                </thead>
+                <tbody id="contactsTable"></tbody>
+            </table>
+        </div>
+
+        <div class="table-card">
+            <h2>Verified Emails</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody id="emailsTable"></tbody>
+            </table>
+        </div>
+
+        <div class="table-card">
+            <h2>Generated Outreach</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Subject</th>
+                    </tr>
+                </thead>
+                <tbody id="outreachTable"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+
+        async function loadStats() {
+
+            const response = await fetch("/api/stats");
+            const data = await response.json();
+
+            document.getElementById("companies").innerText = data.companies;
+            document.getElementById("contacts").innerText = data.contacts;
+            document.getElementById("emails").innerText = data.emails;
+            document.getElementById("outreach").innerText = data.outreach;
+
+        }
+
+        async function loadCompanies() {
+
+            const response = await fetch("/api/companies");
+            const data = await response.json();
+
+            const table = document.getElementById("companiesTable");
+
+            table.innerHTML = "";
+
+            data.forEach(company => {
+
+                table.innerHTML += `
+                <tr>
+                    <td>${company.company || "-"}</td>
+                    <td>${company.domain || "-"}</td>
+                    <td>${company.relevance || "-"}</td>
+                </tr>
+                `;
+            });
+
+        }
+
+        async function loadContacts() {
+
+            const response = await fetch("/api/contacts");
+            const data = await response.json();
+
+            const table = document.getElementById("contactsTable");
+
+            table.innerHTML = "";
+
+            data.forEach(contact => {
+
+                table.innerHTML += `
+                <tr>
+                    <td>${contact.name}</td>
+                    <td>${contact.title}</td>
+                    <td>${contact.company}</td>
+                </tr>
+                `;
+            });
+
+        }
+
+        async function loadEmails() {
+
+            const response = await fetch("/api/emails");
+            const data = await response.json();
+
+            const table = document.getElementById("emailsTable");
+
+            table.innerHTML = "";
+
+            data.forEach(email => {
+
+                table.innerHTML += `
+                <tr>
+                    <td>${email.name}</td>
+                    <td>${email.company}</td>
+                    <td>${email.email}</td>
+                </tr>
+                `;
+            });
+
+        }
+
+        async function loadOutreach() {
+
+            const response = await fetch("/api/outreach");
+            const data = await response.json();
+
+            const table = document.getElementById("outreachTable");
+
+            table.innerHTML = "";
+
+            data.forEach(item => {
+
+                table.innerHTML += `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.company}</td>
+                    <td>${item.subject}</td>
+                </tr>
+                `;
+            });
+
+        }
+
+        async function loadLogs() {
+
+            const response = await fetch("/api/logs");
+            const logs = await response.json();
+
+            const panel =
+                document.getElementById("logsPanel");
+
+            if (logs.length === 0) {
+
+                panel.innerText =
+                    "Waiting for pipeline...";
+
+                return;
+            }
+
+            panel.innerText =
+                logs.join("\n");
+
+            panel.scrollTop =
+                panel.scrollHeight;
+        }
+
+        async function refreshDashboard() {
+
+            await loadStats();
+            await loadCompanies();
+            await loadContacts();
+            await loadEmails();
+            await loadOutreach();
+
+        }
+
+        async function resetWorkspace() {
+
+            const status =
+                document.getElementById(
+                    "statusMessage"
+                );
+
+            try {
+
+                await fetch(
+                    "/api/reset",
+                    {
+                        method: "POST"
+                    }
+                );
+
+                status.innerText =
+                    "🧹 Workspace reset successfully";
+
+                await refreshDashboard();
+                await loadLogs();
+
+            } catch (error) {
+
+                status.innerText =
+                    error.message;
+            }
+        }
+
+        document
+            .getElementById("runBtn")
+            .addEventListener("click", async () => {
+
+                const domain =
+                    document.getElementById("domainInput").value;
+
+                const status =
+                    document.getElementById("statusMessage");
+
+                if (!domain) {
+
+                    status.innerText =
+                        "Please enter a company domain.";
+
+                    return;
+                }
+
+                status.innerText =
+                    "🚀 Running outreach pipeline...";
+
+                document.getElementById("runBtn").disabled = true;
+                document.getElementById("runBtn").innerText = "Running...";
+
+                try {
+
+                    const response =
+                        await fetch("/api/run", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                domain
+                            })
+                        });
+
+                    const result =
+                        await response.json();
+
+                    if (result.success) {
+
+                        status.innerText =
+                            "✅ Pipeline completed successfully.";
+
+                    } else {
+
+                        status.innerText =
+                            result.message;
+                    }
+
+                } catch (error) {
+
+                    status.innerText =
+                        error.message;
+
+                } finally {
+
+                    document.getElementById("runBtn").disabled = false;
+                    document.getElementById("runBtn").innerText = "Run Pipeline";
+
+                    await refreshDashboard();
+                }
+
+            });
+
+        document
+            .getElementById("resetBtn")
+            .addEventListener(
+                "click",
+                resetWorkspace
+            );
+
+        refreshDashboard();
+
+        loadLogs();
+
+        setInterval(async () => {
+
+            await refreshDashboard();
+            await loadLogs();
+
+        }, 2000);
+
+    </script>
+
+</body>
+
+</html>
