@@ -118,27 +118,26 @@ Version Control:
 ## Project Structure
 
 project-root/
-
+```text
+SubSpace-OutReach/
 ├── public/
 │   ├── index.html
 │   └── style.css
-│
 ├── src/
 │   ├── config/
 │   ├── pipeline/
 │   ├── services/
 │   ├── utils/
 │   └── index.js
-│
 ├── data/
 │   ├── companies.json
 │   ├── contacts.json
 │   ├── emails.json
 │   └── outreach.json
-│
 ├── server.js
 ├── package.json
 └── README.md
+```
 
 ---
 
