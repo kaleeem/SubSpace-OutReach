@@ -1,6 +1,6 @@
+# SubSpace Outreach Automation Platform
+
 ## CLI OUTPUT
-
-
 
 <img width="811" height="396" alt="image" src="https://github.com/user-attachments/assets/9eb4a7c0-f80b-4b6d-8b5a-06101ea58a3c" />
 
@@ -8,8 +8,10 @@
 
 <img width="484" height="799" alt="image" src="https://github.com/user-attachments/assets/592786d4-1940-45b5-a874-b824a7056b8b" />
 
+## Resulting Email 
 
-# SubSpace Outreach Automation Platform
+<img width="1560" height="447" alt="image" src="https://github.com/user-attachments/assets/6e5ff044-0af8-48c0-b039-1e80002cdc8f" />
+<img width="1569" height="308" alt="image" src="https://github.com/user-attachments/assets/71cf4c23-44ac-4fe5-841a-4ec1da05e18a" />
 
 ## Overview
 
