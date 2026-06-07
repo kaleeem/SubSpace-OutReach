@@ -1,3 +1,7 @@
+CLI OUTPUT->
+<img width="811" height="396" alt="image" src="https://github.com/user-attachments/assets/9eb4a7c0-f80b-4b6d-8b5a-06101ea58a3c" />
+
+Custom DashBoard->
 <img width="484" height="799" alt="image" src="https://github.com/user-attachments/assets/592786d4-1940-45b5-a874-b824a7056b8b" />
 
 
